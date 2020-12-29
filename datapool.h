@@ -19,6 +19,11 @@ struct PoolNode {
 
 class DataPool {
 public:
+    explicit DataPool(Options &opt);
+    ~DataPool();
+
+    int64_t NewNode(const const::string key, const std::string value);
+    void* Translate(int64_t offset);
 
 private:
     Arena arena_;

@@ -2,6 +2,7 @@
 #define PMHASHTABLE_DATAINDEX_H
 #include "arena.h"
 #include "options.h"
+#include "datapool.h"
 #include "MurmurHash3.h"
 #include <string>
 #include <stdint.h>
@@ -14,13 +15,13 @@ namespace pmhashtable {
 
 struct IndexNode {
     bool is_valid;
-    int64_t realnode;
+    int64_t poolnode;
 };
 
 
 class DataIndex {
 public:
-    explicit DataIndex(Options& opt);
+    explicit DataIndex(Options& opt, DataPool *dp);
     ~DataIndex();
 
     bool Write(const std::string key, const std::string value);
@@ -30,8 +31,8 @@ public:
 private:
     uint64_t Hash(const std::string str);
     Arena arena_;
-    std::string indexinfo_;
-    
+    DataPool *datapool_;
+
 };
 
 } // pmhashtable

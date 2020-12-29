@@ -21,9 +21,9 @@ public:
     bool Delete(const std::string key);
 
 private:
-    DataIndex dataindex_;
     DataPool datapool_;
-    
+    DataIndex dataindex_;
+
 };
 
 } // pmhashtable
