@@ -92,26 +92,29 @@ int main() {
         std::cout << key << ": " << value << std::endl;
     }
 
-    delete it;
-    delete ht;
+    delete it;*/
 
     std::cout << "-Delete-from-k0-to-k5-" << std::endl;
     for (int i = 0; i < 6; i++) {
         key = "k";
         key += std::to_string(i);
-        l->Delete(key);
+        ht->Delete(key);
         std::cout << key << ": " << "delete" << std::endl;
     }
 
-    std::cout << "---------Scan---------" << std::endl;
-    it->SeekToFirst();
-    for (; it->Valid(); it->Next()) {
-        key = it->Key();
-        value = it->Value();
-        std::cout << key << ": " << value << std::endl;
-    }*/
+    std::cout << "---------Read---------" << std::endl;
+    for (int i = 0; i < KEY_NUM; i++) {
+        key = "k";
+        key += std::to_string(i);
+        if (ht->Read(key, &value)) {
+            std::cout << key << ": " << value << std::endl;
+        } else {
+            std::cout << key << ": not found!" << std::endl;
+        }
+    }
 
     std::cout << "--------Reopen--------" << std::endl;
+    delete ht;
     ht = new pmhashtable::HashTable(opt);
     std::cout << "---------Read---------" << std::endl;
     for (int i = 0; i < KEY_NUM; i++) {
