@@ -13,9 +13,9 @@ public:
 
     std::string index_name = "hashtable";
 
-    size_t index_size = 16L * 1024 * 1024 * 1024; // data index size
+    size_t index_size = 8L * 1024 * 1024 * 1024; // data index size
 
-    size_t pool_size = 80L * 1024 * 1024 * 1024; // data pool size
+    size_t pool_size = 72L * 1024 * 1024 * 1024; // data pool size
 };
 
 } // pmhashtable

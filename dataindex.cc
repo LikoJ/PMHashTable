@@ -16,7 +16,7 @@ DataIndex::~DataIndex() {}
 bool DataIndex::Write(const std::string key, const std::string value) {
     uint64_t hashresult = Hash(key);
     IndexNode *in = (IndexNode*)arena_.Allocate(hashresult);
-    int counter = 32;   // align with 32B
+    int counter = 16;   // align with 16B
 
     while (in->is_valid) {
         PoolNode *pn = (PoolNode*)datapool_->Translate(in->poolnode);
@@ -24,8 +24,9 @@ bool DataIndex::Write(const std::string key, const std::string value) {
         if (k == key) {
             break;
         } else {
+            // linear probe
             in = (IndexNode*)arena_.Allocate(hashresult + counter);
-            counter += 32;
+            counter += 16;
         }
     }
 
@@ -40,7 +41,7 @@ bool DataIndex::Write(const std::string key, const std::string value) {
 bool DataIndex::Read(const std::string key, std::string* value) {
     uint64_t hashresult = Hash(key);
     IndexNode *in = (IndexNode*)arena_.Allocate(hashresult);
-    int counter = 32;   // align with 32B
+    int counter = 16;   // align with 16B
 
     while (in->is_valid) {
         PoolNode *pn = (PoolNode*)datapool_->Translate(in->poolnode);
@@ -49,8 +50,9 @@ bool DataIndex::Read(const std::string key, std::string* value) {
             *value = std::string((char*)datapool_->Translate(pn->value), pn->value_len);
             return true;
         } else {
+            // linear probe
             in = (IndexNode*)arena_.Allocate(hashresult + counter);
-            counter += 32;
+            counter += 16;
         }
     }
     return false;
@@ -59,17 +61,18 @@ bool DataIndex::Read(const std::string key, std::string* value) {
 bool DataIndex::Delete(const std::string key) {
     uint64_t hashresult = Hash(key);
     IndexNode *in = (IndexNode*)arena_.Allocate(hashresult);
-    int counter = 32;   // align with 32B
+    int counter = 16;   // align with 16B
 
     while (in->is_valid) {
         PoolNode *pn = (PoolNode*)datapool_->Translate(in->poolnode);
         std::string k((char*)datapool_->Translate(pn->key), pn->key_len);
         if (k == key) {
             in->is_valid = false;
+            arena_.Sync(in, sizeof(IndexNode));
             return true;
         } else {
             in = (IndexNode*)arena_.Allocate(hashresult + counter);
-            counter += 32;
+            counter += 16;
         }
     }
     return false;

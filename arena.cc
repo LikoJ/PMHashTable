@@ -28,7 +28,7 @@ void *Arena::Allocate(size_t bytes, int64_t &offset) {
 }
 
 void* Arena::Allocate(uint64_t hashresult) {
-    return (void *)((hashresult % mapped_len) / 32 * 32 + pmemaddr); // align with 32B
+    return (void *)((hashresult % mapped_len) / 16 * 16 + pmemaddr); // align with 16B
 }
 
 void Arena::Sync(void *start, size_t len) {
