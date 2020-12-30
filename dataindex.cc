@@ -20,7 +20,7 @@ bool DataIndex::Write(const std::string key, const std::string value) {
 
     while (in->is_valid) {
         PoolNode *pn = (PoolNode*)datapool_->Translate(in->poolnode);
-        std::string k = std::string((char*)datapool_->Translate(pn->key), pn->key_len);
+        std::string k((char*)datapool_->Translate(pn->key), pn->key_len);
         if (k == key) {
             break;
         } else {
@@ -44,9 +44,9 @@ bool DataIndex::Read(const std::string key, std::string* value) {
 
     while (in->is_valid) {
         PoolNode *pn = (PoolNode*)datapool_->Translate(in->poolnode);
-        std::string k = std::string((char*)datapool_->Translate(pn->key), pn->key_len);
+        std::string k((char*)datapool_->Translate(pn->key), pn->key_len);
         if (k == key) {
-            value = std::string((char*)datapool_->Translate(pn->value), pn->value_len);
+            *value = std::string((char*)datapool_->Translate(pn->value), pn->value_len);
             return true;
         } else {
             in = (IndexNode*)arena_.Allocate(hashresult + counter);
@@ -63,7 +63,7 @@ bool DataIndex::Delete(const std::string key) {
 
     while (in->is_valid) {
         PoolNode *pn = (PoolNode*)datapool_->Translate(in->poolnode);
-        std::string k = std::string((char*)datapool_->Translate(pn->key), pn->key_len);
+        std::string k((char*)datapool_->Translate(pn->key), pn->key_len);
         if (k == key) {
             in->is_valid = false;
             return true;
