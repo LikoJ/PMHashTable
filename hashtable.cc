@@ -16,7 +16,7 @@ bool HashTable::Read(const std::string key, std::string *value) {
 }
 
 bool HashTable::Delete(const std::string key) {
-    return dataindex_.Delete(key, value);
+    return dataindex_.Delete(key);
 }
 
 }   // pmhashtable

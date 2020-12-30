@@ -6,6 +6,7 @@ FLAGS = -g -std=c++11
 LIBS = -lpmem
 
 OBJECT := arena.o \
+		  MurmurHash3.o \
           datapool.o \
           dataindex.o \
           hashtable.o

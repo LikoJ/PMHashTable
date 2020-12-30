@@ -114,7 +114,7 @@ int main() {
     std::cout << "--------Reopen--------" << std::endl;
     ht = new pmhashtable::HashTable(opt);
     std::cout << "---------Read---------" << std::endl;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < KEY_NUM; i++) {
         key = "k";
         key += std::to_string(i);
         if (ht->Read(key, &value)) {
