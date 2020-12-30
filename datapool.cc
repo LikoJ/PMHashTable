@@ -6,7 +6,7 @@ DataPool::DataPool(Options &opt) : arena_(opt.pm_path + opt.index_name + ".pool"
 
 DataPool::~DataPool() {}
 
-int64_t DataPool::NewNode(const const::string key, const std::string value) {
+int64_t DataPool::NewNode(const std::string key, const std::string value) {
     int64_t n_offset, k_offset, v_offset;
 
     PoolNode *n = (PoolNode*)arena_.Allocate(sizeof(PoolNode), n_offset);
