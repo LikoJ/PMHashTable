@@ -19,6 +19,11 @@ public:
     bool Write(const std::string key, const std::string value);
     bool Read(const std::string key, std::string* value);
     bool Delete(const std::string key);
+    bool Scan(const std::string key, const int n);
+    std::string Key();
+    std::string Value();
+    bool Valid();
+    void Next();
 
 private:
     DataPool datapool_;

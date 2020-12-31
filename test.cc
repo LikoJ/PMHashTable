@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include "hashtable.h"
-#define KEY_NUM 20
+#define KEY_NUM 50
 int main() {
     pmhashtable::Options opt;
     pmhashtable::HashTable *ht = new pmhashtable::HashTable(opt);
@@ -78,21 +78,17 @@ int main() {
         }
     }
 
-    /*
-    std::cout << "-Scan-from-k20-to-k50-" << std::endl;
-    pmhashtable::Iterator *it = ht->NewIterator();
+    
+    std::cout << "-Scan-from-k1-total-10-" << std::endl;
     key = "k";
-    key += std::to_string(20);
-    for (it->Seek(key); it->Valid(); it->Next()) {
-        key = it->Key();
-        value = it->Value();
-        if (key > "k50") {
-            break;
-        }
+    key += std::to_string(1);
+    ht->Scan(key, 10);
+    while (ht->Valid()){
+        key = ht->Key();
+        value = ht->Value();
         std::cout << key << ": " << value << std::endl;
+        ht->Next();
     }
-
-    delete it;*/
 
     std::cout << "-Delete-from-k0-to-k5-" << std::endl;
     for (int i = 0; i < 6; i++) {

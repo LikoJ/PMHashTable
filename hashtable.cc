@@ -19,4 +19,24 @@ bool HashTable::Delete(const std::string key) {
     return dataindex_.Delete(key);
 }
 
+bool HashTable::Scan(const std::string key, const int n) {
+    return dataindex_.Scan(key, n);
+}
+
+std::string HashTable::Key() {
+    return dataindex_.Key();
+}
+
+std::string HashTable::Value() {
+    return dataindex_.Value();
+}
+
+bool HashTable::Valid() {
+    return dataindex_.Valid();
+}
+
+void HashTable::Next() {
+    dataindex_.Next();
+}
+
 }   // pmhashtable
