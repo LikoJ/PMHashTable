@@ -2,9 +2,22 @@
 
 namespace pmhashtable {
 
-DataPool::DataPool(Options &opt) : arena_(opt.pm_path + opt.index_name + ".pool", opt.pool_size) {}
+DataPool::DataPool(Options &opt) : arena_(opt.pm_path + opt.index_name + ".pool", opt.pool_size),
+                                   manifest_(opt.pm_path + opt.index_name + ".fest") {
+    std::ifstream ifs(manifest_);
+    if (!ifs.is_open()) {
+        // do nothing
+    } else {
+        // Recover
+        arena_.Recover(ifs);
+        ifs.close();
+    }
+}
 
-DataPool::~DataPool() {}
+DataPool::~DataPool() {
+    std::ofstream ofs(manifest_);
+    arena_.Save(ofs);
+}
 
 int64_t DataPool::NewNode(const std::string key, const std::string value) {
     int64_t n_offset, k_offset, v_offset;

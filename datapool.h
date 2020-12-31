@@ -27,6 +27,7 @@ public:
 
 private:
     Arena arena_;
+    std::string manifest_;
     
 };
 
